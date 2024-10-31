@@ -1,4 +1,15 @@
 local HighlightLibrary = {}
+local RunService = game:GetService("RunService")
+
+local function generateRandomName()
+    local characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+    local name = ""
+    for i = 1, 10 do
+        local randIndex = math.random(1, #characters)
+        name = name .. string.sub(characters, randIndex, randIndex)
+    end
+    return name
+end
 
 function HighlightLibrary.ApplyHighlight(object, options)
     if not object then return end
@@ -19,6 +30,14 @@ function HighlightLibrary.ApplyHighlight(object, options)
     end
 
     highlight.Parent = object
+
+    task.spawn(function()
+        while highlight.Parent do
+            highlight.Name = generateRandomName()
+            task.wait(1)
+        end
+    end)
+
     return highlight
 end
 
